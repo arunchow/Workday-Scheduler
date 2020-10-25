@@ -1,4 +1,8 @@
 # Workday-Scheduler
+# Dated: 10-25-2020
+# Author: AC
+# Usage jQuery, BootStrap, HTML and CSS.
+# Project objective: Create a wokrload scheduler using jquery and bootstrap
 # Acceptance Criteria 
 GIVEN I am using a daily planner to create a schedule
 WHEN I open the planner
