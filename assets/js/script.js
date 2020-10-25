@@ -1,18 +1,22 @@
+/*Bootcamp Project Module 5
+<!--Version 1.0-->
+<!--Author:AC-->
+<!--Date: 10-25-2020*/
+//Variables
 var text_Hour = 9;
 var text_Suffix = ":00am";
 
 var storedBlocks = [];
 var storedBlocks_NAME = "Stored Blocks";
 
+//function to set color based on current, same and future time
 function setBGColor($div, currentTime, textTime)
 {
     var iTime_CUR = [];
     iTime_CUR = currentTime.split("");
     var iTime_TXT = [];
     iTime_TXT = textTime.split("");
-   // debugger;
     var t_CUR = parseHour(iTime_CUR);
-    t_CUR = 12;
     var t_TXT = parseHour(iTime_TXT);
     var am_CUR = jQuery.inArray('a', iTime_CUR);
     var pm_CUR = jQuery.inArray('p', iTime_CUR);
@@ -21,7 +25,7 @@ function setBGColor($div, currentTime, textTime)
 
     var ampm_CUR = '';
     var ampm_TXT = '';
-    //debugger;
+ 
     if (iTime_CUR[am_CUR])
     {
         ampm_CUR = 'a';
@@ -39,90 +43,72 @@ function setBGColor($div, currentTime, textTime)
         ampm_TXT = 'p';
     }    
     
-    //var ampm_CUR = (iTime_CUR[am_CUR] = 'a') ? 'a' :'p';
-    //var ampm_TXT = (iTime_TXT[am_TXT] = 'a') ? 'a' :'p'; 
-    // var iTime_CUR_P = iTime_CUR[pm_CUR];
-    // var iTime_TXT_P = iTime_CUR[pm_TXT];
-    // var iTime_CUR_A = iTime_CUR[am_CUR];
-    // var iTime_TXT_A = iTime_CUR[am_TXT];
-    // iTime_CUR_P = 'p';
-    
-    //if (am_TXT === am_CUR){
+    //debugger;
     if(parseInt(t_CUR) > parseInt(t_TXT)) 
     {
-        if (!(ampm_CUR === ampm_TXT))
+        if ((ampm_CUR === 'a' && ampm_TXT === 'p')) 
         {
         console.log("current less");
         $div.addClass("bg-primary");
         }
-        else
+        else if ((ampm_CUR === 'p' && ampm_TXT === 'p'))
         {
-        console.log("current greater");
-        $div.addClass("bg-success");
-        } 
-    }
-    else if(parseInt(t_CUR) < parseInt(t_TXT))
-    {
-     //   if (ampm_CUR === ampm_TXT) 
-     //   {
             console.log("current less");
             $div.addClass("bg-primary");
-     //   }
+        } 
+        else if ((ampm_CUR === 'p' && ampm_TXT === 'a'))
+        {
+            console.log("current greater");
+            $div.addClass("bg-success");
+        }
+        else if ((ampm_CUR === 'a' && ampm_TXT === 'a'))
+        {
+            console.log("current greater");
+            $div.addClass("bg-success");
+        }
+    }
+    
+    else if(parseInt(t_CUR) < parseInt(t_TXT))
+    {
+        if ((ampm_CUR === 'a' && ampm_TXT === 'p')) 
+        {
+        console.log("current less");
+        $div.addClass("bg-success");
+        }
+        else if ((ampm_CUR === 'p' && ampm_TXT === 'p'))
+        {
+            if (parseInt(t_TXT) <= 12 && parseInt(t_TXT) >= 9)
+            {
+                console.log("current less");
+                $div.addClass("bg-primary");
+            }
+            else{
+                console.log("txt more");
+                $div.addClass("bg-success");
+            }
+        } 
+        
+        else if ((ampm_CUR === 'p' && ampm_TXT === 'a'))
+        {
+            console.log("current more");
+            $div.addClass("bg-primary");
+        }
+        else if ((ampm_CUR === 'a' && ampm_TXT === 'a'))
+        {
+            console.log("current less");
+            $div.addClass("bg-success");
+        }
+     
     }      
     else
     {
         console.log("current same");
         $div.addClass("text-light bg-dark");
     }
-    //}    
-        //}
-
-    // if(iTime_CUR[iTime_CUR.length - 2] !== iTime_TXT[iTime_TXT.length - 2])
-    // {
-    //     //if(iTime_CUR[iTime_CUR.length - 2] > iTime_TXT[iTime_TXT.length - 2])
-    //     if(iTime_CUR[iTime_CUR.length] > iTime_TXT[iTime_TXT.length])
-    //     {
-    //         console.log("p > a");
-    //         $div.addClass("bg-secondary");
-    //     }
-    //     else
-    //     {
-    //         console.log("p < a");
-    //         $div.addClass("bg-primary");
-    //     }
-    // }
-    // else
-    // {
-    //     console.log("same time of day");
-    //     $div.addClass("text-light bg-dark");
-    //     var t_CUR = parseHour(iTime_CUR);
-    //     var t_TXT = parseHour(iTime_TXT);
-
-    //     if(parseInt(t_CUR) > parseInt(t_TXT))
-    //     {
-    //         console.log("current greater");
-    //         $div.addClass("bg-secondary");
-    //     }
-    //     else if(parseInt(t_CUR) < parseInt(t_TXT))
-    //     {
-    //         if(parseInt(t_TXT) === 12)
-    //         {
-    //             console.log("current greater");
-    //             $div.addClass("bg-secondary");
-    //         }
-    //         else
-    //         {
-    //             console.log("current less");
-    //             $div.addClass("bg-primary");
-    //         }
-    //     }
-    //     else
-    //     {
-    //         $div.addClass("bg-warning");
-    //     }
-    // }
+    
 }
 
+//function to generate hour block
 function generateHourBlock(iterations)
 {
     if(!iterations)
@@ -131,8 +117,7 @@ function generateHourBlock(iterations)
     }
 
     var currentTime = GetCurrentHour("LT");
-    //input = $( ":button" ).addClass( "saveBtn" );
-    //$("#planner").append(input);
+ 
     for(var i = 0; i < iterations; i++)
     {
         var text_time = text_Hour + text_Suffix;
@@ -148,25 +133,15 @@ function generateHourBlock(iterations)
         $iSaveIcon =  $('<input type="button" value="Save" />').addClass("save"); 
       
            
-        //$iSaveIcon = $("<span>").addClass("save");
-        //$( ":button" ).addClass( "marked" )
-        //$iSaveIcon = $("button, input[type='button']").addClass("save");
-        //$iSaveIcon = $("button, input[type='button']").addClass("save");
-        //$iSaveIcon.attr
-       // 
-        //debugger;
+    
         $iSaveDiv = $("<div>").addClass("col-1 py-3 save-container border border-primary").append($iSaveIcon);
         
         $iSaveIcon.toggleClass('unsave');
-        //debugger;
-        //$iBlock.append($iTimeDiv, $iTextDiv, $iSaveDiv);
+   
         $iBlock.append($iTimeDiv, $iTextDiv, $iSaveDiv);
-       // debugger;
+ 
         $("#planner").append($iBlock);
 
-
-
-    
         incrementTextHour();
     }
 
@@ -195,11 +170,11 @@ function DisplayDate(pFormat)
 
     $("#currentDay").text(date);
 }
-
+//function to get current hour
 function GetCurrentHour(pFormat)
 {
     var time = moment().format(pFormat).toLowerCase();
-   // debugger;
+
     time = time.split("");
 
     var suffix = "";
@@ -237,10 +212,11 @@ function parseHour(pTime)
     return iHour;
 }
 
+//function to store the text in the time block
 function AlterStoredBlocks(pText, pID)
 
 {
-  //  alert("Store");
+ 
     nBlock = {
         id : pID,
         input : pText.trim()
@@ -259,17 +235,16 @@ function AlterStoredBlocks(pText, pID)
             return null;
         }
     }
-   // alert("Let us store");
+  
     storedBlocks.push(nBlock);
 
     localStorage.setItem(storedBlocks_NAME, JSON.stringify(storedBlocks));
 }
 
-
+//function to get the stored clocks
 function GetStoredBlocks()
 {
-  //  alert("Get");
-  //  debugger;
+ 
     if(localStorage.getItem(storedBlocks_NAME))
     {
         storedBlocks = JSON.parse(localStorage.getItem(storedBlocks_NAME));
@@ -295,7 +270,7 @@ function GetStoredBlocks()
 generateHourBlock(9);
 DisplayDate("LLLL");
 GetStoredBlocks();
-
+//Event .save
 $(".save").click(function() {
     console.log("Save clicked");
    
